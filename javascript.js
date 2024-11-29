@@ -12,7 +12,7 @@ function getComputerChoice(){
 }
 
 function getHumanChoice(){
-    let humanChoice = prompt("Choose your weapon, Neo: Rock, Paper, or Scissors?");
+    let humanChoice = prompt("Choose your weapon, Neo: Rock, Paper, or Scissors?", "Rock");
     return humanChoice.toLowerCase();
 }
 
@@ -70,7 +70,7 @@ while(humanScore < 3 && computerScore < 3){
     const humanSelection = getHumanChoice();
     const computerSelection = getComputerChoice();
     console.log(playRound(humanSelection, computerSelection));
-} 
+}
 
 function playGame(humanScore, computerScore){
     if (computerScore > humanScore){
