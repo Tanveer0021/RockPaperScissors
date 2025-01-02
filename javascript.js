@@ -11,74 +11,109 @@ function getComputerChoice(){
     }
 }
 
-function getHumanChoice(){
-    let humanChoice = prompt("Choose your weapon, Neo: Rock, Paper, or Scissors?", "Rock");
-    return humanChoice.toLowerCase();
-}
-
 let humanScore = 0;
 let computerScore = 0;
 
 function playRound(humanChoice, computerChoice) {
+    document.body.style.backgroundColor = 'white';
+    display.style.color = 'black';
     if(computerChoice == "rock"){
         if (humanChoice == "rock"){
-            return "🟩 The Matrix calculates a stalemate: Both chose Rock. \n 🟢 Scores: Neo " + humanScore + " : AI " + computerScore;
+            display.textContent = "It's a draw: Both chose Rock. \n Scores: You " + humanScore + " : AI " + computerScore;
         } 
         else if (humanChoice == "paper"){
             humanScore += 1;
-            return "🟢 Neo outsmarts the Matrix! Paper wraps Rock. \n 🟢 Scores: Neo " + humanScore + " : AI " + computerScore;
+            display.textContent = "You win! Paper covers Rock. \n Scores: You " + humanScore + " : AI " + computerScore;
         }
-        else if (humanChoice == "scissors"){
+        else{
             computerScore += 1;
-            return "🟥 The Matrix strikes back! Rock smashes Scissors. \n 🟢 Scores: Neo " + humanScore + " : AI " + computerScore;
+            display.textContent = "AI wins! Rock smashes Scissors. \n Scores: You " + humanScore + " : AI " + computerScore;
         }
-        else return "🟨 Glitch in the Matrix! Choose Rock, Paper, or Scissors. \n 🟢 Scores: Neo " + humanScore + " : AI " + computerScore;
     }
 
     else if(computerChoice == "paper"){
         if (humanChoice == "rock"){
             computerScore += 1;
-            return "🟥 The Matrix dominates! Paper covers Rock. \n 🟢 Scores: Neo " + humanScore + " : AI " + computerScore;
+            display.textContent = "AI wins! Paper covers Rock. \n Scores: You " + humanScore + " : AI " + computerScore;
         }
         else if (humanChoice == "paper"){ 
-            return "🟩 The Matrix holds steady: Both chose Paper. \n 🟢 Scores: Neo " + humanScore + " : AI " + computerScore;
+            display.textContent = "It's a draw: Both chose Paper. \n Scores: You " + humanScore + " : AI " + computerScore;
         }
-        else if (humanChoice == "scissors"){ 
+        else{ 
             humanScore += 1;
-            return "🟢 Neo cuts through the Matrix! Scissors beat Paper. \n 🟢 Scores: Neo " + humanScore + " : AI " + computerScore;
+            display.textContent = "You win! Scissors beat Paper. \n Scores: You " + humanScore + " : AI " + computerScore;
         }
-        else return "🟨 Glitch in the Matrix! Choose Rock, Paper, or Scissors. \n 🟢 Scores: Neo " + humanScore + " : AI " + computerScore;
     }
 
     else { 
         if (humanChoice == "rock"){ 
             humanScore += 1;
-            return "🟢 Neo crushes the Matrix! Rock smashes Scissors. \n 🟢 Scores: Neo " + humanScore + " : AI " + computerScore;
+            display.textContent = "You win! Rock smashes Scissors. \n Scores: You " + humanScore + " : AI " + computerScore;
         }
         else if (humanChoice == "paper"){ 
             computerScore += 1;
-            return "🟥 The Matrix retaliates! Scissors shred Paper. \n 🟢 Scores: Neo " + humanScore + " : AI " + computerScore;
+            display.textContent = "AI wins! Scissors shred Paper. \n Scores: You " + humanScore + " : AI " + computerScore;
         }
-        else if (humanChoice == "scissors"){ 
-            return "🟩 Balance maintained in the Matrix: Both chose Scissors. \n 🟢 Scores: Neo " + humanScore + " : AI " + computerScore;
+        else{ 
+            display.textContent = "It's a draw: Both chose Scissors. \n Scores: You " + humanScore + " : AI " + computerScore;
         }
-        else return "🟨 Glitch in the Matrix! Choose Rock, Paper, or Scissors. \n 🟢 Scores: Neo " + humanScore + " : AI " + computerScore;
+    }
+    if (computerScore >= 5){
+        document.body.style.backgroundColor = 'red';
+        display.style.color = 'white';
+        display.textContent = "GAME OVER. AI Wins! \n Scores: You " + humanScore + " : AI " + computerScore;
+        humanScore = 0;
+        computerScore = 0;
+    }
+    else if(humanScore >= 5){
+        document.body.style.backgroundColor = 'green';
+        display.style.color = 'white';
+        display.textContent = "Congratulations! You Won! \n Scores: You " + humanScore + " : AI " + computerScore;
+        humanScore = 0;
+        computerScore = 0;
     }
 }
 
-while(humanScore < 3 && computerScore < 3){
-    const humanSelection = getHumanChoice();
+const buttons = document.createElement('div');
+const rockBtn = document.createElement('button');
+const paperBtn = document.createElement('button');
+const scissorsBtn = document.createElement('button');
+
+rockBtn.textContent = 'Rock';
+paperBtn.textContent = 'Paper';
+scissorsBtn.textContent = 'Scissors';
+
+document.body.style.textAlign = 'center';
+document.body.style.padding = '80px';
+buttons.style.margin = '24px';
+
+
+const display = document.createElement('div');
+
+rockBtn.addEventListener('click', () => {
+    const humanSelection = 'rock';
     const computerSelection = getComputerChoice();
-    console.log(playRound(humanSelection, computerSelection));
-}
+    playRound(humanSelection, computerSelection);
+})
 
-function playGame(humanScore, computerScore){
-    if (computerScore > humanScore){
-        return "🟥 GAME OVER. The Matrix has you, Neo. AI Wins!";
-    }
-    else{
-        return "🟢 Victory! Neo defies the Matrix. You Won!";
-    }
-}
+paperBtn.addEventListener('click', () => {
+    const humanSelection = 'paper';
+    const computerSelection = getComputerChoice();
+    playRound(humanSelection, computerSelection);
+})
 
-console.log(playGame(humanScore,computerScore));
+scissorsBtn.addEventListener('click', () => {
+    const humanSelection = 'scissors';
+    const computerSelection = getComputerChoice();
+    playRound(humanSelection, computerSelection);
+})
+
+const body = document.querySelector('body');
+
+body.appendChild(buttons);
+
+buttons.appendChild(rockBtn);
+buttons.appendChild(paperBtn);
+buttons.appendChild(scissorsBtn);
+
+body.appendChild(display);
