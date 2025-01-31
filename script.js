@@ -1,174 +1,119 @@
-// GAME
-
-let playerScore = 0
-let computerScore = 0
-let roundWinner = ''
-
-function playRound(playerSelection, computerSelection) {
-  if (playerSelection === computerSelection) {
-    roundWinner = 'tie'
+function getComputerChoice(){
+  let x = Math.floor(Math.random() * 3);
+  if (x == 0){
+      return "rock";
   }
-  if (
-    (playerSelection === 'ROCK' && computerSelection === 'SCISSORS') ||
-    (playerSelection === 'SCISSORS' && computerSelection === 'PAPER') ||
-    (playerSelection === 'PAPER' && computerSelection === 'ROCK')
-  ) {
-    playerScore++
-    roundWinner = 'player'
+  else if(x == 1){
+      return "paper";
   }
-  if (
-    (computerSelection === 'ROCK' && playerSelection === 'SCISSORS') ||
-    (computerSelection === 'SCISSORS' && playerSelection === 'PAPER') ||
-    (computerSelection === 'PAPER' && playerSelection === 'ROCK')
-  ) {
-    computerScore++
-    roundWinner = 'computer'
-  }
-  updateScoreMessage(roundWinner, playerSelection, computerSelection)
-}
-
-function getRandomChoice() {
-  let randomNumber = Math.floor(Math.random() * 3)
-  switch (randomNumber) {
-    case 0:
-      return 'ROCK'
-    case 1:
-      return 'PAPER'
-    case 2:
-      return 'SCISSORS'
+  else{
+      return "scissors";
   }
 }
 
-function isGameOver() {
-  return playerScore === 5 || computerScore === 5
-}
+let humanScore = 0;
+let computerScore = 0;
 
-// UI
-
-const scoreInfo = document.getElementById('scoreInfo')
-const scoreMessage = document.getElementById('scoreMessage')
-const playerScorePara = document.getElementById('playerScore')
-const computerScorePara = document.getElementById('computerScore')
-const playerSign = document.getElementById('playerSign')
-const computerSign = document.getElementById('computerSign')
-const rockBtn = document.getElementById('rockBtn')
-const paperBtn = document.getElementById('paperBtn')
-const scissorsBtn = document.getElementById('scissorsBtn')
-const endgameModal = document.getElementById('endgameModal')
-const endgameMsg = document.getElementById('endgameMsg')
-const overlay = document.getElementById('overlay')
-const restartBtn = document.getElementById('restartBtn')
-
-rockBtn.addEventListener('click', () => handleClick('ROCK'))
-paperBtn.addEventListener('click', () => handleClick('PAPER'))
-scissorsBtn.addEventListener('click', () => handleClick('SCISSORS'))
-restartBtn.addEventListener('click', restartGame)
-overlay.addEventListener('click', closeEndgameModal)
-
-function handleClick(playerSelection) {
-  if (isGameOver()) {
-    openEndgameModal()
-    return
+function playRound(humanChoice, computerChoice) {
+  document.body.style.backgroundColor = 'white';
+  display.style.color = 'black';
+  if(computerChoice == "rock"){
+      if (humanChoice == "rock"){
+          display.textContent = "It's a draw: Both chose Rock. \n Scores: You " + humanScore + " : AI " + computerScore;
+      } 
+      else if (humanChoice == "paper"){
+          humanScore += 1;
+          display.textContent = "You win! Paper covers Rock. \n Scores: You " + humanScore + " : AI " + computerScore;
+      }
+      else{
+          computerScore += 1;
+          display.textContent = "AI wins! Rock smashes Scissors. \n Scores: You " + humanScore + " : AI " + computerScore;
+      }
   }
 
-  const computerSelection = getRandomChoice()
-  playRound(playerSelection, computerSelection)
-  updateChoices(playerSelection, computerSelection)
-  updateScore()
-
-  if (isGameOver()) {
-    openEndgameModal()
-    setFinalMessage()
-  }
-}
-
-function updateChoices(playerSelection, computerSelection) {
-  switch (playerSelection) {
-    case 'ROCK':
-      playerSign.textContent = '✊'
-      break
-    case 'PAPER':
-      playerSign.textContent = '✋'
-      break
-    case 'SCISSORS':
-      playerSign.textContent = '✌'
-      break
+  else if(computerChoice == "paper"){
+      if (humanChoice == "rock"){
+          computerScore += 1;
+          display.textContent = "AI wins! Paper covers Rock. \n Scores: You " + humanScore + " : AI " + computerScore;
+      }
+      else if (humanChoice == "paper"){ 
+          display.textContent = "It's a draw: Both chose Paper. \n Scores: You " + humanScore + " : AI " + computerScore;
+      }
+      else{ 
+          humanScore += 1;
+          display.textContent = "You win! Scissors beat Paper. \n Scores: You " + humanScore + " : AI " + computerScore;
+      }
   }
 
-  switch (computerSelection) {
-    case 'ROCK':
-      computerSign.textContent = '✊'
-      break
-    case 'PAPER':
-      computerSign.textContent = '✋'
-      break
-    case 'SCISSORS':
-      computerSign.textContent = '✌'
-      break
+  else { 
+      if (humanChoice == "rock"){ 
+          humanScore += 1;
+          display.textContent = "You win! Rock smashes Scissors. \n Scores: You " + humanScore + " : AI " + computerScore;
+      }
+      else if (humanChoice == "paper"){ 
+          computerScore += 1;
+          display.textContent = "AI wins! Scissors shred Paper. \n Scores: You " + humanScore + " : AI " + computerScore;
+      }
+      else{ 
+          display.textContent = "It's a draw: Both chose Scissors. \n Scores: You " + humanScore + " : AI " + computerScore;
+      }
+  }
+  if (computerScore >= 5){
+      document.body.style.backgroundColor = 'red';
+      display.style.color = 'white';
+      display.textContent = "GAME OVER. AI Wins! \n Scores: You " + humanScore + " : AI " + computerScore;
+      humanScore = 0;
+      computerScore = 0;
+  }
+  else if(humanScore >= 5){
+      document.body.style.backgroundColor = 'green';
+      display.style.color = 'white';
+      display.textContent = "Congratulations! You Won! \n Scores: You " + humanScore + " : AI " + computerScore;
+      humanScore = 0;
+      computerScore = 0;
   }
 }
 
-function updateScore() {
-  if (roundWinner === 'tie') {
-    scoreInfo.textContent = "It's a tie!"
-  } else if (roundWinner === 'player') {
-    scoreInfo.textContent = 'You won!'
-  } else if (roundWinner === 'computer') {
-    scoreInfo.textContent = 'You lost!'
-  }
+const buttons = document.createElement('div');
+const rockBtn = document.createElement('button');
+const paperBtn = document.createElement('button');
+const scissorsBtn = document.createElement('button');
 
-  playerScorePara.textContent = `Player: ${playerScore}`
-  computerScorePara.textContent = `Computer: ${computerScore}`
-}
+rockBtn.textContent = 'Rock';
+paperBtn.textContent = 'Paper';
+scissorsBtn.textContent = 'Scissors';
 
-function updateScoreMessage(winner, playerSelection, computerSelection) {
-  if (winner === 'player') {
-    scoreMessage.textContent = `${capitalizeFirstLetter(
-      playerSelection
-    )} beats ${computerSelection.toLowerCase()}`
-    return
-  }
-  if (winner === 'computer') {
-    scoreMessage.textContent = `${capitalizeFirstLetter(
-      playerSelection
-    )} is beaten by ${computerSelection.toLowerCase()}`
-    return
-  }
+document.body.style.textAlign = 'center';
+document.body.style.padding = '80px';
+buttons.style.margin = '24px';
 
-  scoreMessage.textContent = `${capitalizeFirstLetter(
-    playerSelection
-  )} ties with ${computerSelection.toLowerCase()}`
-}
 
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
-}
+const display = document.createElement('div');
 
-function openEndgameModal() {
-  endgameModal.classList.add('active')
-  overlay.classList.add('active')
-}
+rockBtn.addEventListener('click', () => {
+  const humanSelection = 'rock';
+  const computerSelection = getComputerChoice();
+  playRound(humanSelection, computerSelection);
+})
 
-function closeEndgameModal() {
-  endgameModal.classList.remove('active')
-  overlay.classList.remove('active')
-}
+paperBtn.addEventListener('click', () => {
+  const humanSelection = 'paper';
+  const computerSelection = getComputerChoice();
+  playRound(humanSelection, computerSelection);
+})
 
-function setFinalMessage() {
-  return playerScore > computerScore
-    ? (endgameMsg.textContent = 'You won!')
-    : (endgameMsg.textContent = 'You lost...')
-}
+scissorsBtn.addEventListener('click', () => {
+  const humanSelection = 'scissors';
+  const computerSelection = getComputerChoice();
+  playRound(humanSelection, computerSelection);
+})
 
-function restartGame() {
-  playerScore = 0
-  computerScore = 0
-  scoreInfo.textContent = 'Choose your weapon'
-  scoreMessage.textContent = 'First to score 5 points wins the game'
-  playerScorePara.textContent = 'Player: 0'
-  computerScorePara.textContent = 'Computer: 0'
-  playerSign.textContent = '❔'
-  computerSign.textContent = '❔'
-  endgameModal.classList.remove('active')
-  overlay.classList.remove('active')
-}
+const body = document.querySelector('body');
+
+body.appendChild(buttons);
+
+buttons.appendChild(rockBtn);
+buttons.appendChild(paperBtn);
+buttons.appendChild(scissorsBtn);
+
+body.appendChild(display);
