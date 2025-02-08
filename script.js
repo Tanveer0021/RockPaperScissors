@@ -1,3 +1,19 @@
+const body = document.querySelector('body');
+const buttons = document.createElement('div');
+const rockBtn = document.createElement('button');
+const paperBtn = document.createElement('button');
+const scissorsBtn = document.createElement('button');
+const roundResult = document.createElement('h1');
+const scoreCard = document.createElement('h1');
+
+rockBtn.textContent = 'Rock';
+paperBtn.textContent = 'Paper';
+scissorsBtn.textContent = 'Scissors';
+
+body.style.textAlign = 'center';
+body.style.padding = '80px';
+scoreCard.style.fontSize = '2.5em';
+
 function getComputerChoice(){
   let x = Math.floor(Math.random() * 3);
   if (x == 0){
@@ -12,102 +28,69 @@ function getComputerChoice(){
 }
 
 let humanScore = 0;
-let computerScore = 0;
+let computerScore = 0; 
 
 function playRound(humanChoice, computerChoice) {
+  
   if(computerChoice == "rock"){
       if (humanChoice == "rock"){
-          display.textContent = "It's a draw: Both chose Rock. \n Scores: You " + humanScore + " : AI " + computerScore;
+          roundResult.innerHTML = `It's a draw: Both chose Rock.<br>`;
       } 
       else if (humanChoice == "paper"){
           humanScore += 1;
-          display.textContent = "You win! Paper covers Rock. \n Scores: You " + humanScore + " : AI " + computerScore;
+          roundResult.innerHTML = `You win! Paper covers Rock.<br>`;
       }
       else{
           computerScore += 1;
-          display.textContent = "AI wins! Rock smashes Scissors. \n Scores: You " + humanScore + " : AI " + computerScore;
+          roundResult.innerHTML = `AI wins! Rock smashes Scissors.<br>`;
       }
   }
 
   else if(computerChoice == "paper"){
       if (humanChoice == "rock"){
           computerScore += 1;
-          display.textContent = "AI wins! Paper covers Rock. \n Scores: You " + humanScore + " : AI " + computerScore;
+          roundResult.innerHTML = `AI wins! Paper covers Rock.<br>`;
       }
       else if (humanChoice == "paper"){ 
-          display.textContent = "It's a draw: Both chose Paper. \n Scores: You " + humanScore + " : AI " + computerScore;
+        roundResult.innerHTML = `It's a draw: Both chose Paper.<br>`;
       }
       else{ 
           humanScore += 1;
-          display.textContent = "You win! Scissors beat Paper. \n Scores: You " + humanScore + " : AI " + computerScore;
+          roundResult.innerHTML = `You win! Scissors beat Paper.<br>`;
       }
   }
 
   else { 
       if (humanChoice == "rock"){ 
           humanScore += 1;
-          display.textContent = "You win! Rock smashes Scissors. \n Scores: You " + humanScore + " : AI " + computerScore;
+          roundResult.innerHTML = `You win! Rock smashes Scissors.<br>`;
       }
       else if (humanChoice == "paper"){ 
           computerScore += 1;
-          display.textContent = "AI wins! Scissors shred Paper. \n Scores: You " + humanScore + " : AI " + computerScore;
+          roundResult.innerHTML = `AI wins! Scissors shred Paper.<br>`;
       }
       else{ 
-          display.textContent = "It's a draw: Both chose Scissors. \n Scores: You " + humanScore + " : AI " + computerScore;
+          roundResult.innerHTML = `It's a draw: Both chose Scissors.<br>`;
       }
   }
-  if (computerScore >= 5){
-      display.textContent = "GAME OVER. AI Wins! \n Scores: You " + humanScore + " : AI " + computerScore;
-      humanScore = 0;
-      computerScore = 0;
-  }
-  else if(humanScore >= 5){
-      display.textContent = "Congratulations! You Won! \n Scores: You " + humanScore + " : AI " + computerScore;
+
+  scoreCard.innerHTML = `Score: You ${humanScore} - AI ${computerScore}`;
+
+  if (computerScore >= 5 || humanScore >= 5){
+    roundResult.innerHTML = humanScore >= 5 ? `Congratulations! You Won!<br>`:`GAME OVER. AI Wins!<br>`;
+    scoreCard.innerHTML = `Final Score: You ${humanScore} - AI ${computerScore}`;
       humanScore = 0;
       computerScore = 0;
   }
 }
 
-const buttons = document.createElement('div');
-const rockBtn = document.createElement('button');
-const paperBtn = document.createElement('button');
-const scissorsBtn = document.createElement('button');
-
-rockBtn.textContent = 'Rock';
-paperBtn.textContent = 'Paper';
-scissorsBtn.textContent = 'Scissors';
-
-document.body.style.textAlign = 'center';
-document.body.style.padding = '80px';
-buttons.style.margin = '24px';
-
-
-const display = document.createElement('h1');
-
-rockBtn.addEventListener('click', () => {
-  const humanSelection = 'rock';
-  const computerSelection = getComputerChoice();
-  playRound(humanSelection, computerSelection);
-})
-
-paperBtn.addEventListener('click', () => {
-  const humanSelection = 'paper';
-  const computerSelection = getComputerChoice();
-  playRound(humanSelection, computerSelection);
-})
-
-scissorsBtn.addEventListener('click', () => {
-  const humanSelection = 'scissors';
-  const computerSelection = getComputerChoice();
-  playRound(humanSelection, computerSelection);
-})
-
-const body = document.querySelector('body');
+rockBtn.addEventListener('click', () => playRound('rock', getComputerChoice()));
+paperBtn.addEventListener('click', () => playRound('paper', getComputerChoice()));
+scissorsBtn.addEventListener('click', () => playRound('scissors', getComputerChoice()));
 
 body.appendChild(buttons);
-
 buttons.appendChild(rockBtn);
 buttons.appendChild(paperBtn);
 buttons.appendChild(scissorsBtn);
-
-body.appendChild(display);
+body.appendChild(roundResult);
+body.appendChild(scoreCard);
