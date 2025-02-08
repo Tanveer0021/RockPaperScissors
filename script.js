@@ -15,8 +15,6 @@ let humanScore = 0;
 let computerScore = 0;
 
 function playRound(humanChoice, computerChoice) {
-  document.body.style.backgroundColor = 'white';
-  display.style.color = 'black';
   if(computerChoice == "rock"){
       if (humanChoice == "rock"){
           display.textContent = "It's a draw: Both chose Rock. \n Scores: You " + humanScore + " : AI " + computerScore;
@@ -59,15 +57,11 @@ function playRound(humanChoice, computerChoice) {
       }
   }
   if (computerScore >= 5){
-      document.body.style.backgroundColor = 'red';
-      display.style.color = 'white';
       display.textContent = "GAME OVER. AI Wins! \n Scores: You " + humanScore + " : AI " + computerScore;
       humanScore = 0;
       computerScore = 0;
   }
   else if(humanScore >= 5){
-      document.body.style.backgroundColor = 'green';
-      display.style.color = 'white';
       display.textContent = "Congratulations! You Won! \n Scores: You " + humanScore + " : AI " + computerScore;
       humanScore = 0;
       computerScore = 0;
@@ -88,7 +82,7 @@ document.body.style.padding = '80px';
 buttons.style.margin = '24px';
 
 
-const display = document.createElement('div');
+const display = document.createElement('h1');
 
 rockBtn.addEventListener('click', () => {
   const humanSelection = 'rock';

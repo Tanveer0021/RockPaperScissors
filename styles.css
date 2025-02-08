@@ -1,0 +1,22 @@
+button{
+    color: white;
+    margin:5px;
+    padding: 10px 25px;
+    border-radius: 10px;
+    background-color: hsl(240, 98%, 60%);
+    transition: background-color 0.25s;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+button:hover{
+    background-color: hsl(240, 98%, 70%);
+}
+
+button:active{
+    background-color: hsl(240, 98%, 80%);
+}
+
+h1{
+    font-family: Helvetica;
+}
