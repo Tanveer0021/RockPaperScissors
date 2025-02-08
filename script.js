@@ -12,7 +12,7 @@ scissorsBtn.textContent = 'Scissors';
 
 body.style.textAlign = 'center';
 body.style.padding = '80px';
-scoreCard.style.fontSize = '2.5em';
+buttons.style.margin = '25px 0px';
 
 function getComputerChoice(){
   let x = Math.floor(Math.random() * 3);
@@ -32,47 +32,19 @@ let computerScore = 0;
 
 function playRound(humanChoice, computerChoice) {
   
-  if(computerChoice == "rock"){
-      if (humanChoice == "rock"){
-          roundResult.innerHTML = `It's a draw: Both chose Rock.<br>`;
-      } 
-      else if (humanChoice == "paper"){
-          humanScore += 1;
-          roundResult.innerHTML = `You win! Paper covers Rock.<br>`;
-      }
-      else{
-          computerScore += 1;
-          roundResult.innerHTML = `AI wins! Rock smashes Scissors.<br>`;
-      }
-  }
+    if(computerChoice === humanChoice){
+        roundResult.innerHTML = `It's a Draw! Both chose ${humanChoice}.<br>`;
+    }
 
-  else if(computerChoice == "paper"){
-      if (humanChoice == "rock"){
-          computerScore += 1;
-          roundResult.innerHTML = `AI wins! Paper covers Rock.<br>`;
-      }
-      else if (humanChoice == "paper"){ 
-        roundResult.innerHTML = `It's a draw: Both chose Paper.<br>`;
-      }
-      else{ 
-          humanScore += 1;
-          roundResult.innerHTML = `You win! Scissors beat Paper.<br>`;
-      }
-  }
+    else if((computerChoice == "rock" && humanChoice == "paper") || (computerChoice == "paper" && humanChoice == "scissors") || (computerChoice == "scissors" && humanChoice == "rock")){
+        roundResult.innerHTML = `You Win! ${humanChoice} Beats ${computerChoice}.<br>`;
+        humanScore++;
+    }
 
-  else { 
-      if (humanChoice == "rock"){ 
-          humanScore += 1;
-          roundResult.innerHTML = `You win! Rock smashes Scissors.<br>`;
+    else{
+        roundResult.innerHTML = `AI Wins! ${computerChoice} Beats ${humanChoice}.<br>`;
+        computerScore++;
       }
-      else if (humanChoice == "paper"){ 
-          computerScore += 1;
-          roundResult.innerHTML = `AI wins! Scissors shred Paper.<br>`;
-      }
-      else{ 
-          roundResult.innerHTML = `It's a draw: Both chose Scissors.<br>`;
-      }
-  }
 
   scoreCard.innerHTML = `Score: You ${humanScore} - AI ${computerScore}`;
 
