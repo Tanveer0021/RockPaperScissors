@@ -3,7 +3,7 @@ button{
     margin:5px;
     padding: 10px 25px;
     border-radius: 10px;
-    background-color: hsl(240, 100%, 60%);
+    background-color: hsl(201, 100%, 60%);
     transition: background-color 0.25s;
     font-size: 2em;
     font-weight: bold;
@@ -12,11 +12,11 @@ button{
 
 
 button:hover{
-    background-color: hsl(240, 98%, 70%);
+    background-color: hsl(201, 100%, 70%);
 }
 
 button:active{
-    background-color: hsl(240, 98%, 80%);
+    background-color: hsl(201, 100%, 80%);
 }
 
 h1{

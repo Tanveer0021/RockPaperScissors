@@ -6,9 +6,9 @@ const scissorsBtn = document.createElement('button');
 const roundResult = document.createElement('h1');
 const scoreCard = document.createElement('h1');
 
-rockBtn.textContent = 'Rock';
-paperBtn.textContent = 'Paper';
-scissorsBtn.textContent = 'Scissors';
+rockBtn.textContent = '👊';
+paperBtn.textContent = '✋';
+scissorsBtn.textContent = '✌️';
 
 body.style.textAlign = 'center';
 body.style.padding = '80px';
@@ -31,17 +31,19 @@ let humanScore = 0;
 let computerScore = 0; 
 
 function playRound(humanChoice, computerChoice) {
-  
+    roundResult.style.color = "black";
     if(computerChoice === humanChoice){
         roundResult.innerHTML = `It's a Draw! Both chose ${humanChoice}.<br>`;
     }
 
     else if((computerChoice == "rock" && humanChoice == "paper") || (computerChoice == "paper" && humanChoice == "scissors") || (computerChoice == "scissors" && humanChoice == "rock")){
+        roundResult.style.color = "green";
         roundResult.innerHTML = `You Win! ${humanChoice} Beats ${computerChoice}.<br>`;
         humanScore++;
     }
 
     else{
+        roundResult.style.color = "red";
         roundResult.innerHTML = `AI Wins! ${computerChoice} Beats ${humanChoice}.<br>`;
         computerScore++;
       }
